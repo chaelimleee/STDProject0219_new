@@ -1,0 +1,47 @@
+
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<link th:href="@{'/css/main.css'}" rel="stylesheet">
+<meta charset="UTF-8">
+<title> 메인화면 </title>
+<style>
+.logBtn{
+	position: absolute;
+    background-color:#D1ED9E;
+    color: #fff;
+    border:none;
+    border-radius:10px;
+    float: right;
+}
+
+</style>
+</head>
+<body>
+<!-- <div th:fragment="mainheader"> -->
+<section id="header" layout:fragment="header">
+
+<header> 
+	<h2> 건강한 한끼 추천!! </h2>
+</header>
+<input  type="button" class="logBtn" value="로그인" onClick="location.href='login.html'" >
+
+<div align="center">
+
+	<nav>
+		<a> 성적입력 </a>
+		&emsp;&emsp;&emsp;<a> 성적조회 </a>
+		&emsp;&emsp;&emsp;<a> 글 작성</a>
+		&emsp;&emsp;&emsp;<a th:href="@{/studentList}"> 게시판 목록조회 </a>
+		&emsp;&emsp;&emsp;<a> 페이지 나누기 목록 조회. </a>
+		&emsp;&emsp;&emsp;<a> 홈화면 </a>
+	</nav>
+</div>
+
+    <section id="content" layout:fragment="content">
+        <!-- Content specific to each page goes here -->
+    </section>
+</section>
+</body>
+</html>

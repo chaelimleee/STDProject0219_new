@@ -1,0 +1,12 @@
+package com.javateam.foodCrawlingDemo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.javateam.foodCrawlingDemo.domain.FoodVO;
+import com.javateam.springJPA2.domain.User;
+
+public interface FoodRepository extends JpaRepository<FoodVO, Long> {
+	
+	void save(FoodVO foodvo);
+
+}

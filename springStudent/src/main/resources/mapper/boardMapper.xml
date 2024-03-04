@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="mapper.boardMapper"> -->
+<mapper namespace="com.javateam.student.mapper.BoardMapper">
+
+	<!-- ctrl + 스페이스 = 자동으로,, -->
+	<select id="getBoardList" 
+			resultType="com.javateam.student.domain.BoardVO"> <!-- resultType에 리스트 말고 맵을 사용해야함. -->
+		select * from board
+	</select>
+
+	<select id="getBoardByid" 
+			parameterType="int"
+			resultType="com.javateam.student.domain.BoardVO"> 
+		select * from board
+		where seq = #{seq}
+	</select>
+	
+	
+</mapper>
+
+

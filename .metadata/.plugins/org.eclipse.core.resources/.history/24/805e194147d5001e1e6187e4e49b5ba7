@@ -1,0 +1,6 @@
+package com.javateam.STDProject.repository;
+
+public interface PagingJpaDAO extends PagingAndSortingRepository{
+	 
+   
+} 

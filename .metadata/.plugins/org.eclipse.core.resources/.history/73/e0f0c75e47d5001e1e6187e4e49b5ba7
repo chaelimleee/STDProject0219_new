@@ -1,0 +1,11 @@
+package com.javateam.STDProject.repository;
+
+public interface PagingJpaDAO extends PagingAndSortingRepository<StudentVO, Integer> {
+	 
+    Iterable<StudentVO> findAll(Sort sort);
+   
+    Page<StudentVO> findAll(Pageable pageable);
+   
+    StudentVO findById(int id);
+   
+} 

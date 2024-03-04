@@ -1,0 +1,12 @@
+package com.javateam.foodCrawlingDemo.repository;
+
+import org.springframework.data.jpa.repository.JpaRepo/sitory;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+import com.javateam.foodCrawlingDemo.domain.FoodVO;
+
+public interface FoodRepository extends PagingAndSortingRepository<FoodVO, Long> {
+	
+	void save(FoodVO foodvo);
+
+}

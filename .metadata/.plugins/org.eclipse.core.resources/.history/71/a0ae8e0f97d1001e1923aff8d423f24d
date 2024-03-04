@@ -1,0 +1,24 @@
+package com.javateam.foodCrawlingDemo.repository;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.javateam.foodCrawlingDemo.domain.FoodVO;
+
+@Service
+public class FoodService {
+	
+	@Autowired
+	private FoodRepository foodRepository;
+	
+	@Transactional
+	public void saveCrawData(FoodVO foodvo) {
+		
+        foodRepository.save(foodvo);
+		
+	}
+	
+	
+
+}

@@ -1,0 +1,5 @@
+package com.javateam.STDProject.domain;
+
+public class FoodVO {
+
+}

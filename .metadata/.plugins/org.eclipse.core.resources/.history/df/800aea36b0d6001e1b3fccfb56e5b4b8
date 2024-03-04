@@ -1,0 +1,59 @@
+package com.javateam.STDProject.domain;
+
+import java.sql.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity 
+@Data
+@Table(name = "FOOD_TBL") // 테이블 매핑.
+public class FoodVO {
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private int id;
+
+	@Column(name = "COOKING_INSTRUCTION")
+	private String cooking_instruction;
+	
+	@Column(name = "INGREDIENT")
+	private String ingredient;
+
+	@Column(name = "MINOR_INGREDIENT")
+	private String minor_ingredient;
+
+	@Column(name = "REFERENCE")
+	private Date reference;
+
+	@Column(name = "COOK")
+	private int cook;	
+	
+	@Column(name = "COOKING_ORIGIN")
+	private int cooking_origin;	
+	
+	@Column(name = "FOOD_IMG")
+	private int food_img;	
+	
+	@Column(name = "FOOD_NAME")
+	private int food_name;	
+	
+	@Column(name = "FOOD_TYPE")
+	private int food_type;
+	
+	@Column(name = "INFORMATION_PROVIDER")
+	private int information_provider;	
+
+	@Column(name = "RECIPE")
+	private int recipe;	
+
+	
+	
+}

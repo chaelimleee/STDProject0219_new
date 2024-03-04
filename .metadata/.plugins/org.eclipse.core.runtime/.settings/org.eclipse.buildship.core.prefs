@@ -1,0 +1,12 @@
+arguments=
+auto.sync=false
+eclipse.preferences.version=1
+experimental.module.support=false
+gradle.build.scans=false
+gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+gradle.offline.mode=false
+gradle.user.home=C\:\\ALEELIM\\repo\\gradle
+java.home=C\:\\Program Files\\Eclipse Adoptium\\jdk-17.0.9.9-hotspot
+jvm.arguments=
+show.console.view=true
+show.executions.view=true

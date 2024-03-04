@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>도서 목록</title>
+</head>
+<body>
+ <div th:each="book, iterState : ${bookList}">
+ 	[[${iterState.count}], ] [[${book.name}]] <br>
+  
+ </div>
+</body>
+</html>

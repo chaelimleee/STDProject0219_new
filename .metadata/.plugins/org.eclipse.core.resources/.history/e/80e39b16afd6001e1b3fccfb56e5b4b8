@@ -1,0 +1,65 @@
+package com.javateam.STDProject.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.javateam.STDProject.domain.FoodVO;
+import com.javateam.STDProject.domain.StudentVO;
+import com.javateam.STDProject.paging.PagingJpaDAO;
+import com.javateam.STDProject.service.FoodService;
+import com.javateam.STDProject.service.StudentService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class FoodController {
+	
+	@Autowired
+	private  FoodService service;
+	
+	@Autowired
+	private PagingJpaDAO paingdao;
+
+	@RequestMapping("/")
+	public String home() {
+		
+		return "redirect:/main";
+//		return "redirect:/health";
+	}
+	
+	@RequestMapping("/FoodListPasing")
+	public String pagingHome() {
+		
+		return "redirect:/foodPaging?page=1";
+		
+	}
+	
+	
+	@RequestMapping("/foodPaging")
+	public String paging(@RequestParam("page") int page, Model model) {
+		
+		log.info("페이징 컨트롤러!>>>>");
+		
+		Page<FoodVO> pageList = paingdao.findAllFood(PageRequest.of(page - 1 , 10));
+		List<FoodVO> foodList = pageList.getContent();
+		
+		model.addAttribute("total_page", pageList.getTotalPages());
+        model.addAttribute("curr_page", page);
+        model.addAttribute("foodList", foodList);
+		
+		return "getBoardListPaging";
+	}//
+	
+}

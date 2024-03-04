@@ -1,0 +1,71 @@
+@charset "UTF-8";
+/* @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Brush+Script&family=Nanum+Gothic&family=Single+Day&display=swap')
+ */
+.All{
+	max-width: 1200px; /*화면 중앙 고정! 크게 작게 하든 고정! */
+}
+ 
+#content {
+    display: flex;
+    justify-content: center;
+    /*align-items: center; */
+    height: 100vh; /* 뷰포트 높이의 100%를 사용하여 수직 가운데 정렬 */
+    
+}
+
+#slide {
+    text-align: center; /* 자식 요소들을 수평 가운데 정렬 */
+}
+
+/* 상단 메인 제목 설정 */
+header {
+	background-color:#ffffff;
+	height:90px;   
+	line-height:90px;
+	padding:30px;
+	text-align:center;
+}  
+ 
+/* 상단 메뉴바 설정  */
+
+nav {
+	background-color:#b0c4de;
+	height:50px;   
+	width:1200px;
+	line-height:50px;
+	margin-left:auto; /* 메뉴바 가운데 고정  */
+	margin-right:auto; /* 메뉴바 가운데 고정 */ 
+	border-radius: 10px / 10px;  /* 메뉴바 테두리 둥글게 */
+}
+
+
+a {
+    font-family: "Nanum Gothic", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	text-weight:bold;
+	text-decoration: none; /* 텍스트 링크 밑줄 없애기 */ 
+}
+
+
+a:active{
+	color:white;
+} 
+
+section {
+	background-color:#ffffff;;
+	width:1200px;
+	min-height:550px;
+	margin-left:auto; /* 가운데 고정 */ 
+	margin-right:auto; /* 가운데 고정  */
+}
+
+  
+ 
+footer {
+	background-color:#ffffff;
+	height:50px;   
+	line-height:50px;
+	text-align:center;
+}
+

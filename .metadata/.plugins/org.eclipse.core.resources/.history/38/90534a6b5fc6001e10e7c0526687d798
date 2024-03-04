@@ -1,0 +1,144 @@
+package com.javateam.springFormDemo.controller;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.MatrixVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.javateam.springFormDemo.domain.Book;
+import com.javateam.springFormDemo.service.BookService;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+
+//import jakarta.servlet.http.HttpServletRequest;
+
+@Controller
+@RequestMapping("/books")
+public class BookController {
+
+	// log 객체
+	private static final Logger log = LoggerFactory.getLogger(BookController.class);
+
+	@Autowired
+	private BookService bookService;
+
+	@GetMapping
+	public String requestBookList(Model model) {
+		List<Book> list = bookService.getAllBookList();
+		model.addAttribute("bookList", list);
+		return "books";
+	}
+
+	/*
+	 * @GetMapping("/all") public String requestAllBooks(Model model) { List<Book>
+	 * list = bookService.getAllBookList(); model.addAttribute("bookList", list);
+	 * return "books"; }
+	 */
+	@GetMapping("/all")
+	public ModelAndView requestAllBooks() {
+
+		ModelAndView modelAndView = new ModelAndView();
+		List<Book> list = bookService.getAllBookList();
+		modelAndView.addObject("bookList", list);
+		modelAndView.setViewName("books");
+		return modelAndView;
+	}
+
+	@GetMapping("/{category}")
+	public String requestBooksByCategory(@PathVariable("category") String bookCategory, Model model) {
+		List<Book> booksByCategory = bookService.getBookListByCategory(bookCategory);
+		model.addAttribute("bookList", booksByCategory);
+		return "books";
+	}
+
+	@GetMapping("/filter/{bookFilter}")
+	public String requestBooksByFilter(@MatrixVariable(pathVar = "bookFilter") Map<String, List<String>> bookFilter,
+			Model model) {
+		Set<Book> booksByFilter = bookService.getBookListByFilter(bookFilter);
+		model.addAttribute("bookList", booksByFilter);
+		return "books";
+	}
+
+	@GetMapping("/book")
+	public String requestBookById(@RequestParam("id") String bookId, Model model) {
+		Book bookById = bookService.getBookById(bookId);
+		model.addAttribute("book", bookById);
+		return "book";
+	}
+
+	/*
+	 * @GetMapping("/add") public String requestAddBookForm(Book book) { return
+	 * "addBook"; }
+	 */
+
+	@GetMapping("/add")
+	public String requestAddBookForm(@ModelAttribute("NewBook") Book book) {
+	// public String requestAddBookForm(Model model) {
+		
+		// model.addAttribute("NewBook", new Book());
+		return "addBook";
+	}
+
+	/*
+	 * @PostMapping("/add") public String
+	 * submitAddNewBook(@ModelAttribute("NewBook") Book book) {
+	 * 
+	 * log.info("NewBook :" + book); // 로그 추가
+	 * 
+	 * bookService.setNewBook(book); return "redirect:/books"; }
+	 */
+	
+	// 폼 유효성 점검(form data validation)
+	// @Valid를 붙여줘야 점검을 해줌.
+	// BindingResult : 에러를 처리해줌.
+	@PostMapping("/add")
+	public String submitAddNewBook(@Valid @ModelAttribute("NewBook") Book book, BindingResult result) {
+		
+		log.info("NewBook :" + book); // 로그 추가
+		
+		// 폼 점검 에러가 있다면 ..... 
+		//BindingResult result 의 hasErrors()를 통해서 에러처리해줌. 
+		if (result.hasErrors() == true) {
+			
+			log.error("폼 점검 에러가 존재합니다.");
+//			log.error("모든 에러들 : {}", result.getAllErrors());
+			log.error("id 필드 에러 : {}", result.getFieldError("bookId").getDefaultMessage()); //bookId 필드명 정확하게 적어줘야함.
+			
+			// addBook.jsp로 포워드 됨. 에러메시지를 가지고 감. 
+			return "addBook";
+			
+		}
+		
+		bookService.setNewBook(book);
+		return "redirect:/books";
+	}
+
+	@ModelAttribute
+	public void addAttributes(Model model) {
+		model.addAttribute("addTitle", "신규 도서 등록");
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.setAllowedFields("bookId", "name", "unitPrice", "author", "description", "publisher", "category",
+				"unitsInStock", "totalPages", "releaseDate", "condition");
+	}
+
+}

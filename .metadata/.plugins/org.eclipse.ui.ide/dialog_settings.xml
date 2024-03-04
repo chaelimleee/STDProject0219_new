@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="NewWizardAction">
+	</section>
+	<section name="ExternalProjectImportWizard">
+		<item key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_CLOSE_CREATED_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_HIDE_CONFLICTING_PROJECTS_ID" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_NESTED_PROJECTS" value="false"/>
+		<item key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID" value="false"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\cofla\Downloads\memberProject (1)"/>
+			<item value="C:\Users\cofla\Downloads\memberProject"/>
+			<item value="C:\Users\cofla\Downloads\springJPA (1)"/>
+			<item value="C:\Users\cofla\Downloads\AopDemo"/>
+			<item value="C:\Users\cofla\Downloads\foodCrawlingDemo (3)"/>
+			<item value="C:\Users\cofla\Downloads\foodCrawlingDemo_0226_tc"/>
+			<item value="C:\Users\cofla\Downloads\foodCrawlingDemo (1)"/>
+			<item value="C:\Users\cofla\Downloads\springJPA"/>
+			<item value="C:\Users\cofla\Downloads\foodCrawlingDemo"/>
+			<item value="C:\Users\cofla\Downloads\SpringBootNaverOAuth"/>
+			<item value="C:\Users\cofla\Downloads\SpringBootKakaoOAuth"/>
+			<item value="C:\Users\cofla\Downloads\springFormDemo (3)"/>
+			<item value="C:\Users\cofla\Downloads\springFormDemoThymeleaf"/>
+			<item value="C:\Users\cofla\Downloads\springJPA2"/>
+			<item value="C:\Users\cofla\Downloads\SpringBootSimpleCaptchaDemo"/>
+			<item value="C:\Users\cofla\Downloads\SpringBootSecurityMyBatisThymeleaf"/>
+			<item value=""/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+			<item value="C:\Users\cofla\Downloads\SpringBootSecurityMyBatisThymeleaf\src\main\resources\templates\myPage.html"/>
+			<item value="C:\Users\cofla\Downloads\foodCrawlingDemo (1)\build.gradle"/>
+			<item value="C:\Users\cofla\Downloads\springFormDemo.zip"/>
+			<item value="C:\Users\cofla\Downloads\demo4.zip"/>
+		</list>
+	</section>
+	<section name="CleanDialogSettings">
+		<item key="TOGGLE_SELECTED" value="true"/>
+		<item key="DIALOG_WIDTH" value="666"/>
+		<item key="DIALOG_HEIGHT" value="482"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="SaveAsDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="941"/>
+		<item key="DIALOG_Y_ORIGIN" value="307"/>
+		<item key="DIALOG_WIDTH" value="700"/>
+		<item key="DIALOG_HEIGHT" value="711"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

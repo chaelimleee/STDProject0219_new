@@ -1,0 +1,3 @@
+#Tomcat publish data
+#Wed Jan 24 12:02:46 KST 2024
+org.eclipse.jst.j2ee.server\:/binary\:C\:\\ALEELIM\\repo\\gradle\\caches\\modules-2\\files-2.1\\org.springframework\\spring-web\\6.0.16\\354ff97cc64bebaaca04a56cd0db6472ab662038\\spring-web-6.0.16.jar=WEB-INF/lib/spring-web-6.0.16.jar

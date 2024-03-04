@@ -1,0 +1,10 @@
+package com.javateam.STDProject.repository;
+
+
+import com.javateam.foodCrawlingDemo.domain.FoodVO;
+
+public interface FoodRepository extends CrudRepository<FoodVO, Long> {// int 보다 long으로 잡는게 더 낫다. 현업에서도 long으로 쓴다
+	
+	
+
+}

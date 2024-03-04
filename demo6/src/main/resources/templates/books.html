@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>도서 목록</title>
+</head>
+<body>
+
+ <div th:each="book, iterState : ${bookList}">
+	<span th:text="${iterState.count}"></span>
+	<span th:text="${book.name}"></span>,
+	<span th:text="${book.author}"></span>,
+	<span th:text="${book.publisher}"></span>,
+	<span th:text="${book.releaseDate}"></span>,
+	<span th:text="${#strings.substring(book.description,0, 10) + '...'}"></span>
+	<span th:text="${#numbers.formatInteger(book.unitPrice ,3, 'COMMA') + '원'}"></span>
+  	<br>
+ </div>
+</body>
+</html>
+

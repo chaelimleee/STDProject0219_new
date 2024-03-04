@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/* @import url('https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Brush+Script&family=Nanum+Gothic&family=Single+Day&display=swap')
+ */
+.All{
+	max-width: 1500px; /*화면 중앙 고정! 크게 작게 하든 고정! */
+}
+ 
+
+/* 상단 메인 제목 설정 */
+header {
+	background-color:#ffffff;
+	/* height:90px;   
+	line-height:90px;
+	padding:30px; */
+	text-align:left;
+}  
+ 
+/* 상단 메뉴바 설정  */
+
+h1 {
+	  display: inline-block;
+	  vertical-align: middle;
+	  color: white;
+	  margin: 0.5rem;
+	  padding: 0;
+}
+
+nav {
+	 display: inline-block;
+  	vertical-align: middle;
+}
+
+ul{
+	 list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+/* li > a{
+    font-family: "Nanum Gothic", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	text-weight:bold;
+	text-decoration: none; 텍스트 링크 밑줄 없애기 
+}
+ */
+
+a:active{
+	color:white;
+} 
+
+section {
+	background-color:#ffffff;
+	width:1500px;
+	min-height:550px;
+	margin-left:auto; /* 가운데 고정 */ 
+	margin-right:auto; /* 가운데 고정  */
+}
+
+  
+ 
+footer {
+	background-color:#ffffff;
+	height:50px;   
+	line-height:50px;
+	text-align:center;
+}
+

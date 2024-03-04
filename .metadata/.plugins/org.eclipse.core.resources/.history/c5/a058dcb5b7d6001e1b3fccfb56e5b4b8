@@ -1,0 +1,20 @@
+package com.javateam.STDProject;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.javateam.STDProject.domain.FoodVO;
+
+@SpringBootTest
+public class FoodTest {
+	
+	@Test
+	void testFoodGetter(){
+		
+		FoodVO vo = new FoodVO();
+		vo.getFood_name();
+		System.out.println(vo.getFood_name());
+		
+	}
+
+}

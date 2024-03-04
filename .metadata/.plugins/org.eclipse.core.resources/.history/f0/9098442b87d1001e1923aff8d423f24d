@@ -1,0 +1,79 @@
+package com.javateam.springJPA2.repository;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.javateam.springJPA2.domain.User;
+
+import lombok.extern.slf4j.Slf4j;
+
+
+
+@SpringBootTest
+@Slf4j
+public class UserRepositoryTest {
+	
+	@Autowired
+	UserRepository userRepo;
+	
+	@Test
+	public void testSelect() {
+		
+		log.info("select test");
+		
+		int page = 1;		
+		User user = userRepo.findById("ezen1039");
+
+		log.info("user : " + user);
+		
+		User expectedUser = User.builder()
+								.userId("ezen1039")
+								.userName("서문영제")
+								.userPassword("123456879")
+								.userAge(42)
+								.userEmail("ezen39@abcd.com")
+								.build();
+		
+		assertEquals(expectedUser, user);
+	}
+	
+	
+	@Test
+	public void testSelectByPaging() {
+		
+		log.info("selectPaging test");
+		
+		int page = 1;		
+		List<User> users = userRepo.findAll(PageRequest.of(page-1, 10)).getContent();
+		
+		// 인원수 검사
+		assertEquals(10, users.size());
+	} 
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testInsert() {
+		
+		log.info("개별 인원정보 생성");
+		
+		User user = User.builder()
+						.userId("java1234")
+						.userName("javaman")
+						.userPassword("123456789")
+						.userAge(20)
+						.userEmail("javaman@abcd.com")
+						.build();
+		
+		userRepo.save(user);
+	}
+
+}

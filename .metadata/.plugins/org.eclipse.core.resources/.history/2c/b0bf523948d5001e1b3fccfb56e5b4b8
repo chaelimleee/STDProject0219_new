@@ -1,0 +1,5 @@
+package com.javateam.STDProject.service;
+
+public class PagingJpaService {
+
+}

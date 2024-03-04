@@ -1,0 +1,34 @@
+package com.javateam.STDProject.service;
+
+import java.util.List;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.javateam.STDProject.domain.FoodVO;
+import com.javateam.STDProject.domain.StudentVO;
+import com.javateam.STDProject.repository.FoodRepository;
+import com.javateam.STDProject.repository.StudentRepository;
+
+@Service
+public class FoodService {
+	
+	@Autowired
+	private FoodRepository foodRepo ;
+	
+	public List<FoodVO> getFoodList(){
+		return foodRepo.getFoodList();
+	}
+	
+	
+
+}

@@ -1,0 +1,88 @@
+package com.javateam.STDProject.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.javateam.STDProject.domain.FoodVO;
+import com.javateam.STDProject.domain.StudentVO;
+import com.javateam.STDProject.paging.PagingFoodJpaDAO;
+import com.javateam.STDProject.paging.PagingJpaDAO;
+import com.javateam.STDProject.service.FoodService;
+import com.javateam.STDProject.service.StudentService;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Controller
+@Slf4j
+public class FoodController {
+	
+	@Autowired
+	private  FoodService service;
+	
+	@Autowired
+	private PagingFoodJpaDAO paingdao;
+
+	
+	@RequestMapping("/FoodListPasing")
+	public String pagingHome() {
+		
+		return "redirect:/foodPaging?page=1";
+		
+	}
+	
+	
+	@RequestMapping("/foodPaging")
+	public String paging(@RequestParam("page") int page, Model model) {
+		try {
+			log.info("푸드 페이징 컨트롤러! 페이지: {}", page);
+			
+			log.info("페이지 요청:{} ", page);
+			
+			Page<FoodVO> pageList = paingdao.findAll(PageRequest.of(page - 1 , 10));
+			log.info("푸드 컨트롤러 첫째와 중간의 투스트링 >>>{}",pageList.getTotalPages());
+			
+			log.info("푸드 컨트롤러 중간 페이지 정보 >>>{}", pageList);
+			List<FoodVO> foodList = pageList.getContent();
+			
+			
+			model.addAttribute("total_page", pageList.getTotalPages());
+	        model.addAttribute("curr_page", page);
+	        model.addAttribute("foodList", foodList);
+	        
+	        log.info("푸드 컨트롤러 다 돌고 음식목록 >>>{}", foodList);
+		}catch(Exception e) {
+			log.error("페이징처리 중 에러 발생: ", e);
+		}
+		return "getFoodListPaging";
+	}//
+	
+	@GetMapping("/foodList")
+	public String getBoardList(Model model, FoodVO vo) {
+		
+		System.out.println(vo);
+		log.info("확인1: " + vo);
+
+		System.out.println("풒드 확인1");
+		 List<FoodVO> list = service.getFoodAllList();
+		 System.out.println("푸드 확인2 list : "+ list);
+		 System.out.println("푸드 확인2");
+//
+//		 result.addObject("studentList", list);
+//		 result.setViewName("/getBoardList");
+		
+		model.addAttribute("foodList", list );
+		
+		 return "/getBoardList";
+	}
+}
