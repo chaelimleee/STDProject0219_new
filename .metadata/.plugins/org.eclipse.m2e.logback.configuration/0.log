@@ -2228,3 +2228,4 @@ Caused by: java.lang.ExceptionInInitializerError: Exception java.lang.ExceptionI
 2024-02-29 14:32:09,965 [Worker-6: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2024-02-29 14:32:47,033 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-02-29 14:32:47,070 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-02-29 14:32:47,081 [Worker-33: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\Users\cofla\Downloads\springFormDemo (3)\src\test\resources
