@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title> 메인화면 </title>
+<link th:href="@{'/css/main.css'}" rel="stylesheet">
+<style>
+		.All{
+			max-width: 1500px; /*화면 중앙 고정! 크게 작게 하든 고정! */
+		}
+		
+		section {
+			background-color:#ffffff;;
+			width:1200px;
+			min-height:400px;
+			margin-left:auto; /* 가운데 고정 */ 
+			margin-right:auto; /* 가운데 고정  */
+		}
+		
+		
+		#content {
+		    display: flex;
+		    justify-content: center;
+		    align-items: center; 
+		    height: 20vh; /* 뷰포트 높이의 100%를 사용하여 수직 가운데 정렬 */
+		    
+		}
+		
+		#slide {
+			position: relative;
+		    text-align: center; /* 자식 요소들을 수평 가운데 정렬 */
+		}
+
+
+		/* 전체 슬라이드 패널 */
+		div#slide {
+			display:flex; 
+			flex-direction:row;
+			width:1250px; /* 갤러리 전시 상품 갯수 5개로 설정 */
+			height:300px;
+			overflow-x:hidden;
+			overflow-y:hidden;
+		}
+
+		/* 개별 슬라이드 패널 */
+		div[id^=s] {
+			width:250px;
+			height:300px;
+			display:flex; 
+			align-items:center;
+			justify-content:center;			
+		}
+
+		/* 개별 상품 이미지 */
+		div[id^=s] img {
+			width:228px;
+			height:298px;
+		}
+		
+		
+		#button{
+			width:1250px;
+			text-align: center;
+			position:absolute;
+		}
+		
+
+		/* 슬라이드 위로 위치 이동 */
+		/* 슬라이드 버튼 */ 
+		button#btn_left {
+			position:absolute;
+			z-index:5;
+			left:70px;
+			opacity:0.4;
+		}
+		
+
+		button#btn_right {
+			position:absolute;
+			z-index:5;
+			left:1100px; /* 슬라이드 갯수 조정에 따른 좌표 변경 */
+			opacity:0.4;
+		}
+		
+	</style>
+	<script>
+		// "좌/우측(양방향)"으로 이동하는 슬라이드
+		window.onload = function() {
+
+			// 변수 위치 이동 : 상품 갯수
+			let productLen = 5;
+			
+			////////////////////////////////////////////////////////////////////////////////
+			// 
+			// 초기 슬라이드 CSS 설정
+			// opacity : 0.3
+			// 상품 이미지에 적용
+			// let allSlides = document.querySelectorAll("div#slide div[id^=s]");
+			let allSlides = document.querySelectorAll("div#slide div[id^=s] img");
+
+			// 슬라이드별 초기 설정 차별화
+			let slideSpec = [
+							 [0.2, "100px", "140px"],
+							 [0.5, "180px", "220px"],
+							 [1,   "228px", "298px"],
+							 [0.5, "180px", "220px"],
+							 [0.2, "100px", "140px"]
+					];
+
+			for (var i=0; i<productLen ; i++) { // slideId of currentSlideArr) {
+
+				allSlides[i].style.opacity = slideSpec[i][0];
+				allSlides[i].style.width = slideSpec[i][1];
+				allSlides[i].style.height = slideSpec[i][2];
+				allSlides[i].style.transition = 'all .3s .5s';		
+			}
+
+			///////////////////////////////////////////////////////
+
+			// "초기" 정중앙 슬라이드 설정
+			// 정중앙 슬라이드 opacity = 1로 설정
+
+			// 슬라이드 갯수 5개일 경우 => 정중앙 위치 슬라이드			
+			let centerNo = Math.ceil(productLen / 2);
+			console.log("centerNo : " + centerNo);
+			let centerSlide = document.getElementById(`s${centerNo}`);				
+			console.log("정중앙 슬라이드 ID : " + centerSlide.id);
+
+			let centerSlideImage = document.querySelector(`#${centerSlide.id} img`);	
+
+			centerSlideImage.style.width = "300px";
+			centerSlideImage.style.height = "300px";
+
+			centerSlideImage.style.opacity = "1";
+			centerSlideImage.style.transition = 'all 1s';		
+
+			////////////////////////////////////////////////////////////////////////////////
+
+			// 이동 카운터 변수
+			let count = 1;
+
+			// 좌측 이동 버튼	
+			let btnLeft = document.getElementById("btn_left");	
+
+			// 우측 이동 버튼	
+			let btnRight = document.getElementById("btn_right"); 
+
+			// 슬라이드들을 둘러싸고 있는 바깥 슬라이드 패널 인식
+			let slide = document.getElementById("slide");
+
+			// 좌측 이동 버튼 클릭시 이벤트 처리
+			btnLeft.onclick = function() {		
+
+				////
+				// 중요) 맨앞의(좌측 첫번째) 슬라이드 아이디
+				let id = document.querySelector("div#slide div:first-child").getAttribute("id");
+				id = id.substring(1); // id="s1" => 카운터("1") 추출
+				count = id;
+
+				console.log("맨 좌측 아이디 : "+ id);
+
+				let leftFirstSlideContent = document.getElementById(`s${count}`).innerHTML;
+
+				console.log("현재 슬라이드 번호(카운터) : " + count);
+				
+				// 맨앞의 슬라이드를 가장 뒷부분에 추가
+				// 단점) 트랜지션 효과 제대로 적용 안됨
+				// slide.innerHTML += 
+				// 	`<div id="s${count}">${leftFirstSlideContent}</div>`;
+
+				//////////////////////////////////////////////////////////////////////
+				//
+				// 트랜지션 효과 적용을 위해 DOM 방식으로 요소 추가 부분 변경
+				let newSlide = document.createElement("div");
+				newSlide.setAttribute("id", `s${count}`);
+				newSlide.innerHTML = `${leftFirstSlideContent}`;						
+				
+				// slide.appendChild(newSlide);
+				slide.append(newSlide);
+
+				console.log(`맨앞 슬라이드 : s${count}`);	
+
+				// 맨앞(좌측 첫번째) 슬라이드 제거	
+				document.getElementById(`s${count}`).remove();	
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				/* 
+				   트랜지션(transition) 효과 
+				   : 투명도 변환 
+				   : 정중앙에 있는 이미지는 투명도 0 으로 설정하고 나머지는 0.5로 
+				   변화 
+ 
+				   1) 정중앙에 위치한 이미지 파악 ex) 2,3,4,5,1 => 4
+				      : 총 슬라이드 수가 5개면 정중앙 슬라이드는 현재 (맨앞 슬라이드 번호 + 2)번째
+				      : 현재 슬라이드(1) => div#slide div:nth-child(3) 
+					  주의) nth-child는 index가 1부터 시작함
+				*/
+				
+				let currentSlideArr = [];
+				for (let i=1; i<=productLen; i++) {
+
+					// let div = document.querySelectorAll("div#slide div[id^=s]")[i].getAttribute("id");
+					// let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).getAttribute("id");
+					let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).id;
+					currentSlideArr.push(div); // 배열 요소 삽입									
+
+				} //
+
+				console.log("현재 슬라이드 배열 상태 : " + currentSlideArr); 
+				// 현재 슬라이드 상태 배열 파악 ex) ['s2', 's3', 's4', 's5', 's1']			
+
+				// 슬라이드 갯수 5개일 경우 => 정중앙 위치 슬라이드
+				// 주의) 배열은 index가 0부터 시작함
+				centerNo = Math.ceil(productLen / 2) - 1;
+				console.log("centerNo : " + centerNo);
+				centerSlide = document.getElementById(currentSlideArr[centerNo]);				
+				console.log("정중앙 슬라이드 ID : " + centerSlide.id);
+
+				// 모든 슬라이드는 효과 재설정
+				// 슬라이드별 초기 설정 차별화
+				// 각 슬라이드별 현황 배열 활용
+				let slideSpec = [
+								 [0.2, "100px", "140px"],
+								 [0.5, "180px", "220px"],
+								 [1,   "228px", "298px"],
+								 [0.5, "180px", "220px"],
+								 [0.2, "100px", "140px"]
+								 ];
+
+				for (var i=0; i<productLen ; i++) { // slideId of currentSlideArr) {
+
+					var slideAttr = document.querySelector(`#${currentSlideArr[i]} img`);
+
+					slideAttr.style.opacity = slideSpec[i][0];
+					slideAttr.style.width = slideSpec[i][1];
+					slideAttr.style.height = slideSpec[i][2];
+
+					slideAttr.style.transition = 'all 1s';		
+
+					// slide.style.transitionProperty = 'all';
+					// slide.style.transitionDelay = '1s';
+					// slide.style.transitionDuration = '.3s';
+				}
+
+				///////////////////////////////////////////////////////
+
+				// 정중앙 슬라이드 opacity = 1로 설정
+				console.log("정중앙 슬라이드 ID-2 : " + centerSlide.id);
+
+				let centerSlideImage = document.querySelector(`#${centerSlide.id} img`);	
+				
+				centerSlideImage.style.width = "300px";
+				centerSlideImage.style.height = "300px";
+
+				centerSlideImage.style.opacity = "1";
+				centerSlideImage.style.transition = 'all 1s';		
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				// 카운터 증가
+				count = (count >= productLen+1) ? 1 : ++count; 
+				
+			}; // onclick :// 좌측 이동 버튼 클릭시 이벤트 처리
+
+			/////////////////////////////////////////////////////////////////////////////
+
+			// 우측이동 버튼 클릭시 이벤트 처리
+			btnRight.onclick = function() {
+
+				console.log("현재 슬라이드번호 : " + count);
+				
+				count = productLen + 1 - count; // 카운터 감소
+
+				// 맨뒤(좌측 기준 마지막번째) 슬라이드
+				let lastDiv = document.querySelector("div div:last-child");
+
+				// 맨앞의(좌측 첫번째) 슬라이드
+				let firstDiv = document.querySelector("div div:first-child")
+
+				// 전체 슬라이드 패널의 마지막 슬라이드(lastDiv) 앞에
+				// 첫번째 슬라이드(firstDiv)를 삽입
+				// https://developer.mozilla.org/ko/docs/Web/API/Node/insertBefore
+				slide.insertBefore(lastDiv, firstDiv);
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				/* 
+				   트랜지션(transition) 효과 
+				   : 투명도 변환 
+				   : 정중앙에 있는 이미지는 투명도 0 으로 설정하고 나머지는 0.5로 
+				   변화 
+ 
+				   1) 정중앙에 위치한 이미지 파악 ex) 2,3,4,5,1 => 4
+				      : 총 슬라이드 수가 5개면 정중앙 슬라이드는 현재 (맨앞 슬라이드 번호 + 2)번째
+				      : 현재 슬라이드(1) => div#slide div:nth-child(3) 
+					  주의) nth-child는 index가 1부터 시작함
+				*/
+				
+				let currentSlideArr = [];
+				for (let i=1; i<=productLen; i++) {
+
+					// let div = document.querySelectorAll("div#slide div[id^=s]")[i].getAttribute("id");
+					// let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).getAttribute("id");
+					let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).id;
+					currentSlideArr.push(div); // 배열 요소 삽입									
+
+				} //
+
+				console.log("현재 슬라이드 배열 상태 : " + currentSlideArr); 
+				// 현재 슬라이드 상태 배열 파악 ex) ['s2', 's3', 's4', 's5', 's1']			
+
+				// 슬라이드 갯수 5개일 경우 => 정중앙 위치 슬라이드
+				// 주의) 배열은 index가 0부터 시작함
+				let centerNo = Math.ceil(productLen / 2) - 1;
+				console.log("centerNo : " + centerNo);
+				let centerSlide = document.getElementById(currentSlideArr[centerNo]);				
+				console.log("정중앙 슬라이드 ID : " + centerSlide.id);
+
+				// 모든 슬라이드는 효과 재설정
+				// 슬라이드별 초기 설정 차별화
+				// 각 슬라이드별 현황 배열 활용
+				let slideSpec = [
+								 [0.2, "100px", "140px"],
+								 [0.5, "180px", "220px"],
+								 [1,   "228px", "298px"],
+								 [0.5, "180px", "220px"],
+								 [0.2, "100px", "140px"]
+								 ];
+
+				for (var i=0; i<productLen ; i++) { // slideId of currentSlideArr) {
+
+					var slideAttr = document.querySelector(`#${currentSlideArr[i]} img`);
+
+					slideAttr.style.opacity = slideSpec[i][0];
+					slideAttr.style.width = slideSpec[i][1];
+					slideAttr.style.height = slideSpec[i][2];
+
+					slideAttr.style.transition = 'all 1s';		
+
+					// slide.style.transitionProperty = 'all';
+					// slide.style.transitionDelay = '1s';
+					// slide.style.transitionDuration = '.3s';
+				}
+
+				/*
+				allSlides[0].style.opacity = 0.2;
+				allSlides[1].style.opacity = 0.5;
+				allSlides[2].style.opacity = 1;
+				allSlides[3].style.opacity = 0.5;
+				allSlides[4].style.opacity = 0.2;
+
+				allSlides[0].style.width = "100px";
+				allSlides[1].style.width = "180px";
+				allSlides[2].style.width = "228px";
+				allSlides[3].style.width = "180px";
+				allSlides[4].style.width = "100px";
+
+				allSlides[0].style.height = "140px";
+				allSlides[1].style.height = "220px";
+				allSlides[2].style.height = "298px";
+				allSlides[3].style.height = "180px";
+				allSlides[4].style.height = "140px";
+
+				for (let slide of allSlides) {
+					slide.style.transition = 'all 1s';		
+					// slide.style.transitionProperty = 'all';
+					// slide.style.transitionDelay = '1s';
+					// slide.style.transitionDuration = '.3s';
+				}
+				*/
+
+				///////////////////////////////////////////////////////
+				//
+				// 정중앙 슬라이드 opacity = 1로 설정
+				console.log("정중앙 슬라이드 ID-2 : " + centerSlide.id);
+
+				let centerSlideImage = document.querySelector(`#${centerSlide.id} img`);	
+				
+				centerSlideImage.style.width = "300px";
+				centerSlideImage.style.height = "300px";
+
+				centerSlideImage.style.opacity = "1";
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				// 카운터 증가
+				count = (count >= productLen) ? 1 : ++count; 
+				
+			}; // onclick
+
+			//////////////////////////////////////////////////////////////////////////////////////
+			//
+			// 일정한 시간간격으로 자동으로 슬라이딩 처리
+			setInterval(function() {
+
+				////
+				// 중요) 맨앞의(좌측 첫번째) 슬라이드 아이디
+				let id = document.querySelector("div#slide div:first-child").getAttribute("id");
+				id = id.substring(1); // id="s1" => 카운터("1") 추출
+				count = id;
+
+				console.log("맨 좌측 아이디 : "+ id);
+
+				let leftFirstSlideContent = document.getElementById(`s${count}`).innerHTML;
+
+				console.log("현재 슬라이드 번호(카운터) : " + count);
+				
+				// 맨앞의 슬라이드를 가장 뒷부분에 추가
+				// 단점) 트랜지션 효과 제대로 적용 안됨
+				// slide.innerHTML += 
+				// 	`<div id="s${count}">${leftFirstSlideContent}</div>`;
+
+				//////////////////////////////////////////////////////////////////////
+				//
+				// 트랜지션 효과 적용을 위해 DOM 방식으로 요소 추가 부분 변경
+				let newSlide = document.createElement("div");
+				newSlide.setAttribute("id", `s${count}`);
+				newSlide.innerHTML = `${leftFirstSlideContent}`;						
+				
+				// slide.appendChild(newSlide);
+				slide.append(newSlide);
+
+				console.log(`맨앞 슬라이드 : s${count}`);	
+
+				// 맨앞(좌측 첫번째) 슬라이드 제거	
+				document.getElementById(`s${count}`).remove();	
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				/* 
+				   트랜지션(transition) 효과 
+				   : 투명도 변환 
+				   : 정중앙에 있는 이미지는 투명도 0 으로 설정하고 나머지는 0.5로 
+				   변화 
+ 
+				   1) 정중앙에 위치한 이미지 파악 ex) 2,3,4,5,1 => 4
+				      : 총 슬라이드 수가 5개면 정중앙 슬라이드는 현재 (맨앞 슬라이드 번호 + 2)번째
+				      : 현재 슬라이드(1) => div#slide div:nth-child(3) 
+					  주의) nth-child는 index가 1부터 시작함
+				*/
+				
+				let currentSlideArr = [];
+				for (let i=1; i<=productLen; i++) {
+
+					// let div = document.querySelectorAll("div#slide div[id^=s]")[i].getAttribute("id");
+					// let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).getAttribute("id");
+					let div = document.querySelector(`div#slide div[id^=s]:nth-child(${i})`).id;
+					currentSlideArr.push(div); // 배열 요소 삽입									
+
+				} //
+
+				console.log("현재 슬라이드 배열 상태 : " + currentSlideArr); 
+				// 현재 슬라이드 상태 배열 파악 ex) ['s2', 's3', 's4', 's5', 's1']			
+
+				// 슬라이드 갯수 5개일 경우 => 정중앙 위치 슬라이드
+				// 주의) 배열은 index가 0부터 시작함
+				centerNo = Math.ceil(productLen / 2) - 1;
+				console.log("centerNo : " + centerNo);
+				centerSlide = document.getElementById(currentSlideArr[centerNo]);				
+				console.log("정중앙 슬라이드 ID : " + centerSlide.id);
+
+				// 모든 슬라이드는 효과 재설정
+				// 슬라이드별 초기 설정 차별화
+				// 각 슬라이드별 현황 배열 활용
+				let slideSpec = [
+								 [0.2, "100px", "140px"],
+								 [0.5, "180px", "220px"],
+								 [1,   "228px", "298px"],
+								 [0.5, "180px", "220px"],
+								 [0.2, "100px", "140px"]
+								 ];
+
+				for (var i=0; i<productLen ; i++) { // slideId of currentSlideArr) {
+
+					var slideAttr = document.querySelector(`#${currentSlideArr[i]} img`);
+
+					slideAttr.style.opacity = slideSpec[i][0];
+					slideAttr.style.width = slideSpec[i][1];
+					slideAttr.style.height = slideSpec[i][2];
+
+					slideAttr.style.transition = 'all .3s .7s';		
+
+					// slide.style.transitionProperty = 'all';
+					// slide.style.transitionDelay = '.3s';
+					// slide.style.transitionDuration = '.53s';
+				}
+
+				///////////////////////////////////////////////////////
+				//
+				// 정중앙 슬라이드 opacity = 1로 설정
+				console.log("정중앙 슬라이드 ID-2 : " + centerSlide.id);
+
+				let centerSlideImage = document.querySelector(`#${centerSlide.id} img`);	
+				
+				centerSlideImage.style.width = "300px";
+				centerSlideImage.style.height = "300px";
+
+				centerSlideImage.style.opacity = "1";
+				centerSlideImage.style.transition = 'all 1s';		
+
+				////////////////////////////////////////////////////////////////////////////////////////
+
+				// 카운터 증가
+				count = (count >= productLen+1) ? 1 : ++count; 
+			}, 3000); // 3초마다 자동으로 우측으로 슬라이딩
+		
+		} // onload
+	</script>
+</head>
+<body>
+    <section layout:fragment="content">
+
+	<!-- 슬라이드 -->
+	<div id="slide">
+		<!--<div th:each="food, iterState : ${foodList}">
+			<div id="img"><img id="imgMain" th:src="@{/img/upload_image3_10page/slide}+${food.food_img}"  style="opacity: 0.2; width: 100px; height: 140px; transition: all 0.3s ease 0.7s;"></div>
+		</div> -->
+		
+		<div id="s5"><img src="./img/5.jpg" style="opacity: 0.2; width: 100px; height: 140px; transition: all 0.3s ease 0.7s;"></div>
+		<div id="s1"><img src="./img/1.jpg" style="opacity: 0.5; width: 180px; height: 220px; transition: all 0.3s ease 0.7s;"></div>
+		<div id="s2"><img src="./img/2.jpg" style="opacity: 1; width: 300px; height: 300px; transition: all 1s ease 0s;"></div>
+		<div id="s3"><img src="./img/3.jpg" style="opacity: 0.5; width: 180px; height: 220px; transition: all 0.3s ease 0.7s;"></div>
+		<div id="s4"><img src="./img/4.jpg" style="opacity: 0.2; width: 100px; height: 140px; transition: all 0.3s ease 0.7s;"></div> 
+	</div>
+	
+	<div id="button">
+	<!-- 
+		좌측 이동 버튼 
+
+		- 참고 : bootstrap 마진(margin:다른 물체와의 간격) 조정
+
+		 ex) mt-1(상위 0.25rem 띄움) ms-1(좌측 .25rem 띄움) m-3(상하좌우 1rem 띄움)
+		 
+		 rem 단위 : https://cafe.naver.com/ezbigjava1/38
+	-->
+	<button id="btn_left" class="btn btn-primary"> <!-- 간격 조정 위해 m-3 제거-->
+		<span class="material-icons mt-1 ms-1"> 
+			arrow_back_ios
+		</span>
+	</button>
+
+	<!-- 
+		우측 이동 버튼 
+
+		참고 : bootstrap 마진(margin:다른 물체와의 간격) 조정
+		
+		ex) mt-1(상위 0.25rem 띄움)
+
+		rem 단위 : https://cafe.naver.com/ezbigjava1/38
+	-->
+	<button id="btn_right" class="btn btn-primary">
+		<span class="material-icons mt-1">
+			arrow_forward_ios
+		</span>
+	</button>
+  
+
+</div>
+    </section>
+</body>
+</html>

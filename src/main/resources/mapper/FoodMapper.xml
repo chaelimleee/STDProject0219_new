@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.javateam.STDProject.dao.FoodMapper">
+
+	<resultMap type="com.javateam.STDProject.domain.FoodVO" id="FoodResult">
+		 <result property="id" column="id" />
+		 <result property="cooking_instruction" column="cooking_instruction" />
+		 <result property="ingredient" column="ingredient" />
+		 <result property="minor_ingredient" column="minor_ingredient" />
+		 <result property="reference" column="reference" />
+		 <result property="cook" column="cook" />
+		 <result property="cooking_origin" column="cooking_origin" />
+		 <result property="food_img" column="food_img" />
+		 <result property="food_name" column="food_name" />
+		 <result property="food_type" column="food_type" />
+		 <result property="information_provider" column="information_provider" />
+		 <result property="recipe" column="recipe" />
+	 </resultMap>
+
+	<select id="getFoodByFoodNameList" 
+			resultType="com.javateam.STDProject.domain.FoodVO"
+			parameterType="String">
+		SELECT * FROM FOOD_TBL 
+		WHERE FOOD_NAME = #{FOOD_NAME}
+	</select>
+
+	<select id="getFoodAllList" 
+			resultType="com.javateam.STDProject.domain.FoodVO"
+			parameterType="String">
+		SELECT * FROM FOOD_TBL 
+	</select>
+	
+	<!-- <select id="getFood" 
+			resultType="com.javateam.STDProject.domain.FoodVO"
+			parameterType="int">
+		SELECT * FROM FOOD_TBL
+		WHERE ID = #{ID}
+	</select> -->
+	
+	<!-- <select id="getFoodByFoodname" 
+			resultType="com.javateam.STDProject.domain.FoodVO"
+			parameterType="String">
+		SELECT * FROM FOOD_TBL 
+		WHERE FOOD_NAME = #{FOOD_NAME}
+	</select>
+	
+	<select id="hasFoodname" 
+			resultType="int"
+			parameterType="String">
+		SELECT count(*) FROM FOOD_TBL 
+		WHERE FOOD_NAME = #{FOOD_NAME}
+	</select>
+	
+	<select id="getUserRolesByUsername" 
+			resultType="com.javateam.STDProject.domain.Role"
+			parameterType="String">
+		SELECT * FROM user_roles 
+		WHERE username = #{username}
+	</select>
+	
+	<insert id="insertUser" parameterType="com.javateam.STDProject.domain.Users">
+		INSERT INTO users VALUES 
+		(#{users.username}, #{users.password}, #{users.enabled})			
+	</insert>
+	
+	<insert id="insertUserRoles">
+		INSERT INTO user_roles VALUES 
+		(user_roles_seq.nextval, #{username}, #{role})
+	</insert>	 -->
+	
+</mapper>
