@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<link th:href="@{'/css/formView.css'}" rel="stylesheet">
+</head>
+<body >
+<section layout:fragment="content">
+
+<!-- <div th:replace="~{main::mainheader}" ></div> -->
+
+	<div align="center">
+	<h3> 페이지 게시판 목록보기 </h3>
+	<br>
+	
+	총 페이지 : <span th:text="${total_page}"></span><br>
+	현재 페이지 : <span th:text="${curr_page}"></span><br>
+	
+	<table >
+		<tr> <th>번호</th> <th>제목</th> <th>작성자</th> <th>등록일</th> <th>조회수</th> </tr>
+			
+		<tr th:each="student, iterState : ${list}">
+			<td th:text="${student.seq}">  </td>
+			<td th:text="${student.title}">  </td>
+			<td th:text="${student.writer}">  </td>
+			<td th:text="${student.regDate}">  </td>
+			<td th:text="${student.cnt}">  </td>
+		</tr>
+	</table>
+	
+	</div>
+</section>
+</body>
+</html>

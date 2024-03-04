@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+<title>음식 페이지 게시판</title>
+
+<link th:href="@{'/css/formView.css'}" rel="stylesheet">
+</head>
+<body >
+<section layout:fragment="content">
+
+<!-- <div th:replace="~{main::mainheader}" ></div> -->
+
+	<div align="center">
+	<br>
+	<h3> 음식 페이지 게시판 </h3>
+	<br>
+	
+	<!-- <div class="searchFood" >
+		<form action="">
+			<input 
+		</form>
+	
+	</div> -->
+	
+	<div class="nowAndTotalPage" align="right">
+		총 페이지 : <span th:text="${total_page}"></span>&emsp;
+		현재 페이지 : <span th:text="${curr_page}"></span><br>
+	</div>
+	
+	<table >
+		<tr> <th>번호</th> <th>이미지</th> <th>음식명</th> <th>식품유형</th> <th>조리법</th> </tr>
+			
+		<tr th:each="food, iterState : ${foodList}">
+			<td th:text="${food.id}">  </td>
+			<!-- <td><img th:if="${food.food_img != null}" th:src="${#strings.equals(food.food_img,'blank_image.png')?'/img/blank_image.png':'/img/upload_image3_10page/' +${food.food_img}"  height="120" width="120" >  </td> --> 
+			<td><img id="imgId" th:src="@{/img/upload_image3_10page/}+${food.food_img}"  height="120" width="120" }>  </td> 
+			<!-- <td th:text="${food.food_img}">  </td> -->
+			<td th:text="${food.food_name}">  </td>
+			<td th:text="${food.food_type}">  </td>
+			<td th:text="${food.recipe}">  </td>
+		</tr>
+	</table>
+	
+	<div class="foodListBtn">
+		<button type="button" class="beforeBtn" onClick="location.href='/STDStudent/FoodListPasing/beforePage'" > 이전 </button>
+		<button type="button" class="afterBtn" onClick="location.href='/STDStudent/FoodListPasing/afterPage'" > 다음 </button>
+	
+	</div>
+	
+	<!-- <div class="paging">
+           <a href="#" class="page_bt first">첫 페이지</a>
+           <a href="#" class="page_bt prev">이전 페이지 그룹</a>
+           <a href="#" class="page_bt next">다음 페이지 그룹</a>
+           <a href="#" class="page_bt last">마지막 페이지</a>
+    </div> -->
+	
+	</div>
+</section>
+</body>
+</html>
